@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="ie-stand">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>不动产收件</title>
+<link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}" media="all">
+<link rel="stylesheet" th:href="@{/static/css/set2.css}" type="text/css" media="all" />
+<link rel="stylesheet" th:href="@{/static/css/bootstrap.css}" media="all" />
+<link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"	media="all" />
+<link rel="stylesheet" th:href="@{/static/css/owl.carousel.css}" type="text/css" />
+<link rel="stylesheet" th:href="@{/static/css/zoomify.min.css}" type="text/css" />
+<script type="text/javascript" th:src="@{/static/js/bootstrap.js}" ></script>
+<script type="text/javascript" th:src="@{/static/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/static/admin/js/tools.js}"></script>
+<script type="text/javascript" th:src="@{/static/laydate/laydate.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery-2.1.1.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery-2.0.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/owl.carousel.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/zoomify.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jQueryRotate.js}"></script>
+
+<style type="text/css">
+#top_cx{
+            position: relative;
+            width: 95%;
+            margin: 20px auto;
+            border: 1px solid #44ACB6;
+            height: 60px;
+            border-radius: 25px;
+}
+.btnAll img{
+	border:0;
+	margin:0;
+	padding:0;
+	width:expression(this.height>80?"80px":this.height);
+	max-width:50px;
+	max-height:80px;
+	height:expression(this.height>80?"80px":this.height);
+}
+#top {
+	position: relative;
+	width: 95%;
+	margin: 20px auto;
+	border-radius: 25px;
+}
+#topdxs {
+	position: relative;
+	width: 95%;
+	margin: 20px auto;
+	border-radius: 25px;
+	display: none;
+}
+#main{
+		position: relative;
+        width: 95%;
+        margin: 20px auto;
+        border: 1px solid #44ACB6;
+        height: 200px;
+        border-radius: 25px;
+}
+#bottom{
+		position: relative;
+        width: 95%;
+        margin: 20px auto;
+        border: 0px solid #44ACB6;  
+        height: 100px;
+    	/*min-height: 516px;*/
+}
+.tupian{
+	width:2600px;
+	height:1000px;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	align:center;
+	padding-left:20%;
+}
+#owl-demo img{border:0 none;}
+#owl-demo{position:relative;width:1400px;padding-bottom:10px;margin:40px auto 0 auto;}
+/* 左右箭头 */
+.owl-buttons div{position:absolute;top:50%;width:45px;height:81px;margin-top:-90px;text-indent:-9999px;background-image:url(static/img/arrow2.png);transition:background-position 0.2s ease-out 0s;}
+.owl-prev{left:-60px;background-position:0 0;}
+.owl-next{right:-60px;background-position:right 0;}
+.owl-prev:hover{background-position:-53px 0;}
+.owl-next:hover{background-position:-122px 0;}
+.tupian img{
+	width:60%;
+	height:80%;
+	align:center;
+	//margin-right:65%;
+}
+#leftContent{
+		float:left;
+		/*float:center;*/
+        width: 95%; 
+        border: 1px solid #44ACB6;
+        margin-top: 1%;
+    	margin-left: 0.2%; 
+    	/*height:395px;*/
+}
+#rightContent{
+		float:right;
+        width: 76%;
+        height: 337px;
+        margin:10px  40px 20px 10px	;
+        border: 0px solid #44ACB6; 
+        display:inline-block;
+		vertical-align:top;   		      
+}
+.fzbutton {
+	width: 60px;
+	height: 30px;
+	border: 0;
+	background-color: #44ACB6;
+	border-radius: 5px;
+	color: #fff;
+	/*display: none;*/
+}
+#s_top{
+	display:inline-block;
+	vertical-align:top;
+	float:right;
+	height:15%;
+    width: 100%;
+    border: 0px solid #44ACB6;   
+}
+#s_bottom{
+	display:inline-block;
+	vertical-align:top;
+	float:right;
+	height:85%;
+    width: 100%;
+    border: 0px solid #44ACB6; 
+    margin-top: 12px;  
+}
+#rightLeftContent1{
+		float:left;
+        width: 10%;
+        border: 1px solid #44ACB6;       
+}
+#check{
+    width: 15px;
+    height: 15px;
+    
+}
+#rightRightContent{
+		float:right;
+        width: 90%;
+        border: 0px solid #44ACB6;       
+}
+.clear{clear:both;} /* 清除空白盒子的所有浮动 */
+.clear1{clear:both;} /* 清除空白盒子的所有浮动 */
+#top_top,#main_top,#pbottom_top {	
+	position: relative;
+    width: 95%;
+    margin: 20px auto;
+    border: 1px solid #dcedc8;
+    height: 50px;
+    background-color: #dcedc8;
+    border-radius: 10px;  
+}
+#pbottom_top_s {	
+	position: relative;
+    width: 89%;
+    /* margin: 10px auto; */
+    border: 1px solid #44ACB6;
+    height: 26px;
+    background-color: #44ACB6;
+    border-radius: 5px;
+    /* margin-left: 5px; */
+    display: inline-block;
+    vertical-align: top;
+}
+#pbottom_top_s1 {	
+	display:inline-block;
+	vertical-align:top;
+    margin: 10px auto;
+	float:right;
+	height:100%;
+    width: 9%;
+    border: 0px solid #44ACB6;   
+}
+#mask{
+       position: absolute;
+       top: 0px;
+       background-color: #000;
+       z-index: 1002;
+       left: 0px;
+       opacity: 0.5;
+       display:none;
+}
+#loading{
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       margin: auto;
+       width:40%;
+}
+.table tr,td,th{
+	border:1px solid !important;
+	text-align:center !important;
+}
+#tab td{
+	width:15%;
+}
+table tr {
+	height: 40px;
+}
+.row form-group {
+	
+}
+.fj{
+	width:50px;
+	height:50px;
+	
+	display:inline-block;
+	vertical-align:top;
+}
+.tsButton
+{
+	width: 60px;
+	height: 35px;
+	border: 0;
+	background-color: #44ACB6;
+	border-radius: 5px;
+	color: #fff;
+}
+ul,li{ padding:0; margin:0; overflow:hidden;}
+li{ list-style:none;}
+img{ border:0;}
+.box{ width:95%;margin-left:2%;position:relative;}
+.box li{ float:left; width:100px; height:80px; margin-right:10px;}
+
+</style>
+</head>
+<body style="height: 100%; ">
+<div style="width: 99%;height: 100%; border: 1px solid #080808;margin-left:5px;">
+<div id="dialog_large_image"></div>
+<div style="width: 99%;height: 100%; border: 0px solid #080808;margin-left:5px;">
+		<!-- <div id="top_top" align="center" style="height:42px;">          
+		     <label id ="srf" style="text-align: center;font-size: 24px;margin-top: 4px;letter-spacing:6px;">附件详情</label> 
+		</div> -->	
+		<!-- <div   style="width: 95%;position: relative;">
+			<table  id="table" class="table" style="width: 100%;height:95%">
+						<thead>
+							<tr style="font-size: 18px;">
+								<th>序号</th>
+								<th>文件名</th>
+							</tr>
+						</thead>
+						<tbody id="tbody"></tbody>
+			</table>
+		</div> -->
+		 <div  style="height: 95%; "class="box box-success " id="slider" >
+		 	 <h3 style="height: 2%; "class="box-title" id="h3"></h3> 
+		 	 <br>
+		 	 <span id="span1"></span>  
+			    <a  onclick="prev();" style="position: absolute;left: -2.5%; top: 50%;"><img th:src="@{/static/img/left2.png}"></a>
+			    <a    onclick="next();" style="position: absolute;right: -4%; top: 50%;"><img th:src="@{/static/img/right2.png}"></a>
+			    <div class="tupian" id="tupianxs" style="width:90%;height: 90%;padding-left:1%;margin-top:0%;">
+             
+             </div>     
+		</div>
+	<div style="align:center;margin-left:38%; height: 5%;margin-top:10px; " class="btnAll" >
+          <img th:src="@{/static/img/add1.png}" onclick="imgToSize(100);"/>
+          &nbsp;
+          <img th:src="@{/static/img/reduce1.png}" onclick="imgToSize(-100);"/>
+          &nbsp;
+          <img th:src="@{/static/img/leftr.png}" class="rotate" onclick="leftRotate();"/>
+          &nbsp;
+          <img th:src="@{/static/img/rightr.png}" class="rotate" onclick="rightRotate();"/>
+	</div>  
+	
+<!-- -----------附件------------- end-->
+</div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+
+var arrUrl =[];  
+var arrTxt =[]; 
+window.onload=function(){
+	var fjlist = [[${fjlist}]];
+	 if (fjlist.length > 0) {
+		$(fjlist).each(function (i) {
+			  var path1=fjlist[i].filePath.substring(fjlist[i].filePath.lastIndexOf('.'),fjlist[i].filePath.length+1);
+			 var x = $("<tr><td>"+(i+1)+"</td><td style='font-size: 18px;width:60%'>"+ fjlist[i].fileTypeName+path1+"</td></tr>");                  
+			 $("#tbody").append(x);
+			 arrUrl.push(fjlist[i].filePath);
+			 arrTxt.push(fjlist[i].fileTypeName+path1);
+		});
+	//调用显示
+		showImg();
+	}	
+}
+var num = 0;
+function showImg(){	
+	$("#tupianxs").empty();
+	$('#tupianxs').html('');	
+	$("#span1").html(num+1 +'/' + arrUrl.length);
+	var path1=encodeURI(arrUrl[num]).substring(encodeURI(arrUrl[num]).lastIndexOf('.'), encodeURI(arrUrl[num]).length);	
+	if(path1==".pdf"||path1==".PDF"){
+		
+		$("#tupianxs").append('<embed  src="/kfqYulan?filePath='+encodeURI(arrUrl[num])+'" class="dialog"  style="width:100%;height:800px;"></embed>') 
+	}
+	else{
+		$("#tupianxs").append('<img id="Imgbox" src="/kfqYulan1?filePath='+encodeURI(arrUrl[num])+'" class="dialog image" style="width:90%;height:95%;zoom:100%;margin:10% 3% 17% 5%;">')
+		
+	}
+	$("#h3").html(arrTxt[num]);
+if(path1==".pdf"||path1==".PDF"){
+		
+	$(".rotate").css('display','none')	}
+	else{
+		$(".rotate").css('display','inline-block')		
+	}
+}
+
+function next(){
+	 num ++;//num自增1
+	 if(num == arrUrl.length){//如果num的值超过数组的长度
+	     num = 0;//恢复到第一张图片（数组中是从0 开始数）
+	 }               
+	 showImg();// 然后相应加载的内容进行变动
+}
+function prev(){
+	 num --;
+	 if(num == -1){
+	     num = arrUrl.length - 1;//如果图片已经在第一张，还点击上一张，那么让图片显示最后一张，即数组长度减1为数组最后一张图片
+	 }
+	 showImg();
+}
+$('.slider img').zoomify();
+var size = 0;
+var r = 0;
+function imgToSize(size){
+		var img =  $(".dialog");
+		var oWidth = img.width(); //取得图片的实际宽度
+		var oHeight = img.height(); //取得图片的实际高度
+		img.width(oWidth + size);
+		img.height(oHeight + size / oWidth * oHeight);
+}
+function leftRotate(){
+		r += 90;
+		$(".image").css('transform','rotate('+r+'deg)')
+}
+function rightRotate(){
+		r -= 90;
+		$(".image").css('transform','rotate('+r+'deg)')
+} 
+</script>
+
+</body>

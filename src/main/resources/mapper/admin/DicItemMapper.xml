@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.admin.oracle.mapper.DicItemMapper">
+	<select id="itemName" parameterType="com.xiaoshu.admin.model.DicItem" resultType="String">
+		<if test="dicname!=null and dicname !='' and itemval!=null and itemval !=''">
+		select itemname from dic_item
+		<where>
+		diccode = (select diccode from dic_main where  dicname= #{dicname} )  and 
+		 itemval= #{itemval}
+		</where>
+		</if>
+	</select>
+	
+	
+	
+
+
+</mapper>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="ie-stand">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<title>三河不动产登记共享</title>
+<link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}"
+	media="all">
+<link rel="stylesheet" th:href="@{/static/css/set2.css}" type="text/css"
+	media="all" />
+<link rel="stylesheet" th:href="@{/static/css/fileinput.css}"
+	media="all" rel="stylesheet" />
+<link rel="stylesheet"
+	th:href="@{/static/font-awesome/css/font-awesome.min.css}" media="all">
+<link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"
+	media="all" />
+<link rel="stylesheet" th:href="@{/static/css/datatables.min.css}"
+	media="all" />
+<link rel="stylesheet" th:href="@{/static/css/bootstrap.css}"
+	media="all" />
+<script type="text/javascript" th:src="@{/static/js/jquery-2.1.1.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/laydate/laydate.js}"></script>
+<script type="text/javascript" th:src="@{/static/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/admin/js/tools.js}"></script>
+<style type="text/css">
+#top {
+	position: relative;
+	width: 99%;
+	margin: 20px auto;
+	border-radius: 25px
+}
+
+#aswsj {
+	color: blue;
+}
+
+#tav {
+	position: relative;
+	width: 99%;
+	margin: 5px auto;
+	border-radius: 25px
+}
+
+#cxtj {
+	position: relative;
+	width: 95%;
+	margin: 30px auto;
+	border: 1px solid #44ACB6;
+	height: 110px;
+	border-radius: 25px;
+	text-align: left;
+}
+
+#cxtj>div {
+	display: inline-block;
+}
+
+.cxtj {
+	position: absolute;
+	top: -9px;
+	left: 2%;
+	font-size: 18px;
+	display: inline-block;
+	background-color: #fff;
+	padding: 0 10px;
+	color: #44ACB6;
+}
+
+.dataTable {
+	text-align: center;
+}
+
+table>thead>tr>th {
+	text-align: center;
+}
+#mytab1 tr th,td{
+     border: 1px solid #ccc !important;
+     height:30px;
+}
+</style>
+</head>
+<body class="main_body">
+	<!-- cxtj开始 -->
+	<div id="tav">
+		<!-- tav开始 -->
+		<span style="font-weight: bold;">受理编号：</span> <input name="slbh"
+			id="slbh" type="text">
+		<button type="button" onclick="slcx();"
+			class="RoleOfedit btn btn-success">查询</button>
+	</div>
+	<!-- cxtj结束 -->
+	<div id="top">
+		<!-- top开始 -->
+		<table id="mytab1" style="width:100%;">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>业务号</th>
+					<th>附件名称</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody id="tbodyFJ" align="center"></tbody>
+		</table>
+			
+	<div id="fjdiv"></div>
+	</div>
+
+	<!-- top结束-->
+	<script type="text/javascript">
+		function slcx() {
+			var ywh = $('#slbh').val();
+			if (ywh == "") {
+				alert("请输入查询条件");
+				return;
+			} else {
+				$("#tbodyFJ").empty();
+				$.ajax({
+						url : "/admin/system/zhcx/fJck",
+						type : "post",
+						data : "&ywh=" + ywh,
+						async : true,
+						cache : true,
+						dataType : "json",
+						success : function(data) {
+								var fjlist = data.fjlist;
+								var fjPath = data.fjPath;
+								if (fjlist.length > 0) {
+										$(fjlist).each(
+											function(i) {//重新生成
+												$("#tbodyFJ").append('<tr>');
+												$("#tbodyFJ").append('<td>'+ (i + 1)+ '</td>');
+												$("#tbodyFJ").append('<td>'+ this.ywh+ '</td>');
+												$("#tbodyFJ").append('<td>'+ this.sjmc+ '</td>');
+												$("#tbodyFJ").append("<td><a onclick='showImg(\""+this.ywh+"/"+this.sjmc+"\")'>查看</a></td>");
+												$("#tbodyFJ").append('</tr>');
+										});
+								} else {
+									$("#tbodyFJ").append('<tr><th colspan ="9"><center>查询无数据</center></th></tr>');
+								}
+								
+							}
+
+						});
+
+			}
+
+		}
+		
+		function showImg(path){
+			$("#fjdiv").empty();
+			var ary = path.split('/');
+			$("#fjdiv").append('<h1>'+ary[1]+ '</h1>');
+			$("#fjdiv").append('<img style="width:100%;" alt="image" src="/admin/system/zhcx/yulan1?filePath='+encodeURI(path)+'"></img>')
+		}
+	</script>
+</body>

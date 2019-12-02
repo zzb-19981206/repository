@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="ie-stand">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>家庭查询</title>
+<link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}" media="all">
+<link rel="stylesheet" th:href="@{/static/css/set2.css}" type="text/css" media="all" />
+<link rel="stylesheet" th:href="@{/static/css/fileinput.css}" media="all" rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/static/css/bootstrap.css}" media="all" />
+<link rel="stylesheet" th:href="@{/static/font-awesome/css/font-awesome.min.css}" media="all">
+<link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"	media="all" />
+<script type="text/javascript"  th:src="@{/static/gpy/js/jquery-1.7.2.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/gpy/js/globeVar.js}" charset="utf-8"></script>
+<script type="text/javascript" th:src="@{/static/gpy/js/mainH5.js}"  charset="utf-8"></script>
+<script type="text/javascript" th:src="@{/static/gpy/js/WebSocket.js}"  charset="utf-8"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/static/laydate/laydate.js}"></script>
+<script type="text/javascript" th:src="@{/static/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/fileinput.js}"></script>
+<script type="text/javascript" th:src="@{/static/laydate/laydate.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/fileinput_locale_zh.js}"></script>
+<script type="text/javascript" th:src="@{/static/admin/js/tools.js}"></script>
+
+<style type="text/css">
+a:hover, a:focus {
+	text-decoration: none;
+	outline: none;
+}
+#accordion {
+	padding-right: 24px;
+	padding-left: 24px;
+	z-index: 1;
+}
+#accordion .panel {
+	border: none;
+	box-shadow: none;
+}
+#accordion .panel-heading {
+	padding: 0;
+	border-radius: 25px;
+	border: none;
+	position: relative;
+	width: 98%;
+	height: 23px;
+	margin: 20px auto;
+	background: #33CC99;
+}
+#accordion .panel-title {
+	padding: 0;
+	border-radius: 25px;
+	border: none;
+	position: relative;
+	width: 98%;
+	height: 23px;
+	margin: 20px auto;
+}
+#accordion .panel-title a {
+	display: block;
+	font-size: 16px;
+	height: 15px;
+	width: 98%;
+	font-weight: bold;
+	background: #33CC99;
+	position: relative;
+	transition: all 0.3s ease 0s;
+	border-radius: 25px;
+}
+#accordion .panel-body {
+	border: 1px solid #33CC99;
+	z-index: 1;
+	position: relative;
+	width: 98%;
+	margin: 20px auto;
+	height: 200px;
+	border-radius: 25px;
+}
+</style>
+<style type="text/css">
+#top_cx {
+	position: relative;
+	width: 95%;
+	margin: 20px auto;
+	border: 1px solid #33CC99;
+	height: 60px;
+	border-radius: 25px
+}
+#srftop {
+	position: relative;
+	width: 95%;
+	margin: 20px auto;
+	border-radius: 25px
+}
+#zrftop {
+	position: relative;
+	width: 95%;
+	margin: 20px auto;
+	border-radius: 25px
+}
+#main {
+	position: relative;
+	width: 95%;
+	margin: 20px auto;
+	border: 1px solid #33CC99;
+	height: 200px;
+	border-radius: 25px
+}
+#bottom {
+	position: relative;
+	width: 95%;
+	margin: 20px auto;
+	border: 1px solid #33CC99;
+	height: 300px;
+	border-radius: 25px
+}
+#top_top, #main_top, #pbottom_top {
+	position: relative;
+	width: 95%;
+	margin: 20px auto;
+	border: 1px solid #33CC99;
+	height: 34px;
+	background-color: #33CC99;
+	border-radius: 10px
+}
+#BZ {
+	position: relative;
+}
+#bz {
+	display: inline-block;
+	margin-left: 10px;
+	overflow: hidden;
+	width: 200%;
+	font-size: 14px;
+	height: 27px;
+	line-height: 27px;
+	padding: 0 0 0 10px;
+	width: 50%;
+}
+#cxtj {
+	position: relative;
+	width: 95%;
+	margin: 30px auto;
+	border: 1px solid #33CC99;
+	height: 110px;
+	border-radius: 25px;
+	text-align: left;
+}
+.cxbutton, .dzbutton, .czbutton{
+	width: 60px;
+	height: 35px;
+	border: 0;
+	background-color: #33CC99;
+	border-radius: 5px;
+	color: #fff;
+}
+.cxtj {
+	position: absolute;
+	top: -9px;
+	left: 2%;
+	font-size: 18px;
+	display: inline-block;
+	background-color: #fff;
+	padding: 0 10px;
+	color: #33CC99
+}
+.bcbutton {
+	width: 60px;
+	height: 35px;
+	border: 0;
+	background-color: #2F4F4F;
+	border-radius: 5px;
+	color: #fff;
+}
+td input {
+	border: none;
+	overflow: hidden;
+	height: 90%;
+	width: 100%;
+	text-align: center;
+}
+table tr {
+	height: 40px;
+}
+.fj{
+	width:100px;
+	height:100px;
+	margin-top:5px;
+	display:inline-block;
+	vertical-align:top;
+}
+#mask{
+       position: absolute;
+       top: 0px;
+       background-color: #000;
+       z-index: 1002;
+       left: 0px;
+       opacity: 0.5;
+       display:none;
+}
+#loading{
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       margin: auto;
+       width:40%;
+}
+</style>
+</head>
+<body class="main_body">
+<div id="mask" class="mask"><img id="loading" th:src="@{/static/img/timg.gif}" ></div>	
+	<!-- 家庭查询div -->
+	<div style="width: 99%; border: 0px solid #080808;;margin-left:5px;">
+		<div id="top_top" align="center">          
+		     <label id ="srf" style="text-align: center;font-size: 25px;">家 庭 不 动 产 信 息（买方）</label> 
+		     <label id="zrf" style="text-align: center;font-size: 25px;">家 庭 不 动 产 信 息（卖方）</label>         
+		</div>		
+			<div id="cxtj" class="layui-form-item">
+				<span class="cxtj">请输入查询条件</span>
+				<form id="form1" action="">
+					<div style="margin-top: 23px; white-space: nowrap; margin-left: 2.5%"
+						class="layui-input-block">
+						<span style="font-size: 18px; font-weight: bold;">权利人:</span> 
+							<input type="text" style="height: 27px" id="qlrmc" name="qlrmc"> 
+						<span style="font-size: 18px; font-weight: bold;">证件号码:</span> 
+						    <input type="text" style="height: 27px" id="zjhm" name="zjhm"> 
+						 <span style="font-size: 18px; font-weight: bold;">选项：</span>
+							 <select id="qlrlx" onchange="change(this.value)" style="width: 100px; height: 30px;">
+							 	<option value="买方" selected>买方</option><!-- srf -->
+		                    	<option value="卖方">卖方</option> <!-- zrf -->                   	
+		                	</select>		                	
+						  <input type="text" name="slbh" id="slbh" th:value="${slbh}" type="hidden">
+					</div>
+				</form>
+				<input type = "text" id = "HeadPath" value = "C:\temp\Head.bmp">
+				<div id="dsrf" style="display: block; text-align: right; width: 97%; margin-top: 10px;">
+					<button type="button" class="cxbutton" id="srfqueryButton">查询</button>
+					<button type="button" class="czbutton" id="srfresetButton">重置</button>
+					<button type="button" class="dzbutton" onclick="ReadIDCard()">读证</button>
+					<button type="button" class="dzbutton" onclick="dyyl()" id="srfdyButton">打印预览</button>
+					<button type="button" class="bcbutton"  onclick="bc()" id="keptButton">保存</button> 
+				</div>
+				<div id="dzrf" style="display: block; text-align: right; width: 97%; margin-top: 10px;">
+					<button type="button" class="cxbutton" id="zrfqueryButton">查询</button>
+					<button type="button" class="czbutton" id="zrfresetButton">重置</button>
+					<button type="button" class="dzbutton" id="zrfreaderButton">读证</button>
+					<button type="button" class="dzbutton" onclick="dyyl()" id="zrfdyButton">打印预览</button>
+					<button type="button" class="bcbutton"  onclick="bc()" id="zrfkeptButton">保存</button> 
+				</div>
+			</div>
+		
+		<!--startprint1--> 
+		<div id="srftop">
+			<table border="1" id="srftab" class="table">
+                <thead>
+                  <tr>
+                  	<th>序号</th>
+                    <th>权利人</th>
+                    <th>证件号码</th>
+                    <th>不动产证号</th>
+                    <th>坐落</th>
+                    <th>房屋用途</th>
+                  </tr>
+                </thead>
+                <tbody id="srftableBody" style="width:95% ;height:100%"  align="center"></tbody>
+              </table>    	
+		</div>
+		
+		<div id="zrftop">
+			<table border="1" id="zrftab" class="table">
+                <thead>
+                  <tr>
+                  	<th>序号</th>
+                    <th>权利人</th>
+                    <th>证件号码</th>
+                    <th>不动产证号</th>
+                    <th>坐落</th>
+                    <th>房屋用途</th>
+                  </tr>
+                </thead>
+                <tbody id="zrftableBody" style="width:95% ;height:100%"  align="center"></tbody>
+              </table>    	
+		</div>
+		<!--endprint1-->
+	</div>
+<!-- 查询 -->	
+<script type="text/javascript">
+window.onload=function(){
+	$("#zrf").hide();
+	$("#zrftop").hide();
+	$("#dzrf").hide();
+}
+function change(val){
+	if(val=="卖方"){
+		$("#zrf").show();	
+		$("#srf").hide();
+		$("#zrftop").show();
+		$("#dzrf").show();
+		$("#srftop").hide();
+		$("#dsrf").hide();
+		document.getElementById("qlrmc").value="";
+		document.getElementById("zjhm").value="";
+/* 		document.getElementById("form1").reset(); */
+	}else if(val=="买方"){
+		$("#zrf").hide();
+		$("#srf").show();		
+		$("#zrftop").hide();
+		$("#dzrf").hide();
+		$("#srftop").show();
+		$("#dsrf").show();
+		document.getElementById("qlrmc").value="";
+		document.getElementById("zjhm").value="";
+/* 		document.getElementById("form1").reset(); */
+	}	
+}
+function showMask() {
+	    $("#mask").css("height", $(document).height());
+	    $("#mask").css("width", $(document).width());
+	    $("#mask").show();
+}
+function hideMask() {
+	    $("#mask").hide();
+}
+//查询    
+$(function () {
+    $("#srfqueryButton").bind("click", function () {
+    		var result;
+    		var result1;
+       		var resultAll = [];
+    		var qlrmc = $("#qlrmc").val().replace(/\s+/g,"");
+    		var zjhm = $("#zjhm").val().replace(/\s+/g,"");
+    		if(qlrmc==""){
+    			alert("请填写姓名");
+    			return;
+    		}
+    		if(zjhm == ""){
+    			alert("请填写身份证号");
+    			return;
+    		}
+    		if(qlrmc.indexOf("，") != -1){    			
+    			qlrmc=qlrmc.replace("，",",");
+    		}
+    		if(zjhm.indexOf("，") != -1){        	
+    			zjhm=zjhm.replace("，",",");
+    		}    		
+    		result=qlrmc.split(",");
+    		result1=zjhm.split(",");
+    		if(qlrmc != "" && zjhm !=""){
+    			if(result.length<=1){
+    				resultAll.push({
+    					"qlrmc":qlrmc,
+    					"zjhm":zjhm
+    				});
+        		}else{
+        			for(var i = 0;i<result.length;i++){
+        				resultAll.push({
+        					"qlrmc":result[i],
+        					"zjhm":result1[i]
+        				});
+        			}
+        		}
+    		}
+    		var jsonData = { // json数据
+        			"bdcjtLst" : resultAll
+        	}
+    		$.ajax({
+    			type : "POST",
+    			url : "/admin/system/bdc/zhcxjtcs",
+    			dataType : "json",
+       			contentType : "application/json;charsetset=UTF-8",//必须
+      			data : JSON.stringify(jsonData),// 将json数据转化为字符串
+    			beforeSend: function () {
+                    showMask();
+                },
+                complete: function () {
+                    hideMask();
+                },
+    			success : function(data) {
+    				var sjfcxx = data.bdcjtList;
+    				$("#srftableBody").empty();
+    					if(sjfcxx.length>0){
+        					$(sjfcxx).each(function (i) {//重新生成
+                           		 $("#srftableBody").append('<tr><td>'+ (i+1)+ '</td><td>'+ this.qlrmc+ '</td><td>'+ this.zjhm+ '</td>'+
+                                     	'<td>'+ this.bdczh+ '</td><td>'+ this.zl+'</td><td>'+ this.ghyt+'</td></tr>');                
+                 					
+        					})
+        				}else {
+                             $("#srftableBody").append('<tr><td>'+ 1+ '</td><td>'+ qlrmc+ '</td><td>'+ zjhm + '</td>'+
+                            	'<td>'+ "无"+ '</td><td>'+ "无"+'</td><td>'+ "无"+'</td></tr>');  
+                            	return;
+                    	}
+    			}
+    		})
+	});
+});
+//查询    
+$(function () {
+    $("#zrfqueryButton").bind("click", function () {
+    		var result;
+    		var result1;
+       		var resultAll = [];
+    		var qlrmc = $("#qlrmc").val();
+    		var zjhm = $("#zjhm").val();
+    		if(qlrmc==""){
+    			alert("请填写姓名");
+    			return;
+    		}
+    		if(zjhm == ""){
+    			alert("请填写身份证号");
+    			return;
+    		}
+    		if(qlrmc.indexOf("，") != -1){    			
+    			qlrmc=qlrmc.replace("，",",");
+    		}
+    		if(zjhm.indexOf("，") != -1){        	
+    			zjhm=zjhm.replace("，",",");
+    		}    		
+    		result=qlrmc.split(",");
+    		result1=zjhm.split(",");
+    		if(qlrmc != "" && zjhm !=""){
+    			if(result.length<=1){
+    				resultAll.push({
+    					"qlrmc":qlrmc,
+    					"zjhm":zjhm
+    				});
+        		}else{
+        			for(var i = 0;i<result.length;i++){
+        				resultAll.push({
+        					"qlrmc":result[i],
+        					"zjhm":result1[i]
+        				});
+        			}
+        		}
+    		}
+    		var jsonData = { // json数据
+        			"bdcjtLst" : resultAll
+        	}
+    		$.ajax({
+    			type : "POST",
+    			url : "/admin/system/bdc/bdcjtcs",
+    			dataType : "json",
+       			contentType : "application/json;charsetset=UTF-8",//必须
+      			data : JSON.stringify(jsonData),// 将json数据转化为字符串
+    			beforeSend: function () {
+                    showMask();
+                },
+                complete: function () {
+                    hideMask();
+                },
+    			success : function(data) {
+    				var sjfcxx = data.bdcjtList;
+    				$("#zrftableBody").empty();
+    					if(sjfcxx.length>0){
+        					$(sjfcxx).each(function (i) {//重新生成
+                           		 $("#zrftableBody").append('<tr><td>'+ (i+1)+ '</td><td>'+ this.qlrmc+ '</td><td>'+ this.zjhm+ '</td>'+
+                                     	'<td>'+ this.bdczh+ '</td><td>'+ this.zl+'</td><td>'+ this.ghyt+'</td></tr>');                 			
+        					})
+        				}else {
+                             $("#zrftableBody").append('<tr><td>'+ 1+ '</td><td>'+ qlrmc+ '</td><td>'+ zjhm + '</td>'+
+                            	'<td>'+ "无"+ '</td><td>'+ "无"+'</td><td>'+ "无"+'</td></tr>');  
+                            	return;
+                    	}
+    			}
+    		})
+	});
+});
+</script>
+<!-- 打印预览 -->
+<script >
+function dyyl() {    
+    	var qlrmc = $("#qlrmc").val();
+    	var zjhm = $("#zjhm").val();
+    	var slbh = $("#slbh").val();
+    	var qlrlx = $("#qlrlx").val();
+    	if(qlrmc == ""){
+    		alert("请查询后在打印");
+    		return ;
+    	}else{
+    		//document.getElementById("bdcjtcxDyYl").submit();	
+    		layer.open({
+  			  type: 2,
+  			  title: ['家庭不动产信息预览','font-size: 20px;'],
+  			  shadeClose: true,
+  			  shade: 0.8,
+  			  area: ['100%', '100%'],
+  			  content: "/admin/system/bdc/bdcjtcxDyYl?slbh=" + slbh+ "&qlrmc=" + encodeURI(encodeURI(qlrmc))+ "&zjhm=" +zjhm+"&qlrlx="+encodeURI(encodeURI(qlrlx)),
+  			}); 
+    	}
+}
+</script>
+<!-- 保存 -->
+<script >
+function bc(){
+    	var slbh = $("#slbh").val();
+    	var qlrlx = $("#qlrlx").val();
+    	var result = []; // 数组
+    	if(qlrlx=="买方"){
+    		$("#srftableBody tr").each(function (i) {
+    			　　//第二列单元格的值eq(索引)
+    			  result.push({
+    					"qlrmc" : $(this).children('td:eq(1)').text(),
+    					"zjhm" : $(this).children('td:eq(2)').text(),
+    					"bdczh" : $(this).children('td:eq(3)').text(),
+    					"zl" : $(this).children('td:eq(4)').text(),
+    					"yt" : $(this).children('td:eq(5)').text(),
+    				})
+    		});
+    	}else if(qlrlx=="卖方"){
+    		$("#zrftableBody tr").each(function (i) {
+  			　　//第二列单元格的值eq(索引)
+  			  result.push({
+  					"qlrmc" : $(this).children('td:eq(1)').text(),
+  					"zjhm" : $(this).children('td:eq(2)').text(),
+  					"bdczh" : $(this).children('td:eq(3)').text(),
+  					"zl" : $(this).children('td:eq(4)').text(),
+  					"yt" : $(this).children('td:eq(5)').text(),
+  				})
+  			});
+    	}
+		
+  				
+  		var jsonData = { // json数据
+  			"fcxxLst" : result,
+  			"slbh" : slbh,
+  			"qlrlx" : qlrlx,
+  		}
+   		$.ajax({
+   			type :"POST", 
+   			url : "/admin/system/bdc/bdcJtInsert", 
+  			contentType : "application/json;charset=UTF-8",
+  			data : JSON.stringify(jsonData),// 将json数据转化为字符串
+  			success : function(data) {
+  				var cs = data.cs;
+  				if(cs == true){
+  					alert("保存成功");
+  				}
+  			}
+  		}) 		 
+}
+</script>
+<!-- 重置 -->
+<script>
+$(function () {
+    $("#zrfresetButton").bind("click", function () {
+    	//document.getElementById("bdcjtcxDyYl").reset();
+    	document.getElementById("form1").reset();
+		$("#zrftableBody").empty();
+		$("#zrftab tbody").html("");
+    });
+});
+$(function () {
+    $("#srfresetButton").bind("click", function () {
+    	//document.getElementById("bdcjtcxDyYl").reset();
+    	document.getElementById("form1").reset();
+		$("#srftableBody").empty();
+		$("#srftab tbody").html("");
+    });
+});
+</script>
+<!-- 读证 -->
+<script>
+$(document).ready(function() {
+			$("#srfreaderButton").click(function() {
+				$.ajax({
+					dataType : "JSONP",
+					type : "get",
+					url : "http://localhost:8080/api/ReadMsg",//接口服务器地址  参数: Fp=1读证内指纹，PhotoQuality 身份证头像质量，cardImg=1获取身份证正反面图片
+					//contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success : function(data) {
+						var qlrmc = $("#qlrmc").val();
+						var zjhm = $("#zjhm").val();
+						if(typeof(data.name) == "undefined" && typeof(data.cardno) == "undefined"){
+		            		alert("请查看读卡器是否链接正确或者手动输入");
+		            		return;
+		            	}else{
+							if (zjhm == "" && qlrmc =="") {
+								$("#qlrmc").val(data.name);
+								$("#zjhm").val(data.cardno);
+							}
+		            	}
+					},
+					error : function(e) {
+						//失败执行
+						alert(e.status + ',' + e.statusText);
+					}
+				});
+			});
+		});
+$(document).ready(function() {
+	$("#zrfreaderButton").click(function() {
+		$.ajax({
+			dataType : "JSONP",
+			type : "get",
+			url : "http://localhost:8080/api/ReadMsg",//接口服务器地址  参数: Fp=1读证内指纹，PhotoQuality 身份证头像质量，cardImg=1获取身份证正反面图片
+			//contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			success : function(data) {
+				var qlrmc = $("#qlrmc").val();
+				var zjhm = $("#zjhm").val();
+				if (zjhm == "" && qlrmc =="") {
+					$("#qlrmc").val(data.name);
+					$("#zjhm").val(data.cardno);
+				}
+			},
+			error : function(e) {
+				//失败执行
+				alert(e.status + ',' + e.statusText);
+			}
+		});
+	});
+});
+	</script>
+</body>

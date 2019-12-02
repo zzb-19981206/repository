@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.admin.oracle.mapper.KfqMainMapper"> 
+	<select id="selectQsxxTS" parameterType="com.xiaoshu.admin.model.Slxx" resultType="com.xiaoshu.admin.model.Slxx">
+		select distinct
+		nvl(a.slbh,' ') as slbh,
+		nvl(a.bdczh,' ') as bdczh,
+		nvl(b.qllx,' ') as qllx,
+		nvl(a.djyy,' ') as djyy,
+		nvl(to_char(b.tdsyqr),' ') as tdsyqr,
+		nvl(to_char(b.dytdmj),' ') as dytdmj,
+		nvl(to_char(b.fttdmj),' ') as fttdmj,
+		nvl(g.lcmc,' ') as ywlx,
+		nvl(to_char(b.qsrq,'yyyy-MM-dd'),' ') as tdsyqssj,
+		nvl(to_char(b.zzrq,'yyyy-MM-dd'),' ') as tdsyjssj,
+		nvl(d.lsfwbh,' ') as fwbh,
+		nvl(z.xmmc,' ') as xmmc,
+		nvl(z.fwjg,' ') as fwjg,
+		nvl(g.zl,' ') as fwzl,
+		nvl(e.ghytms,' ') as ghyt,
+		nvl(to_char(sum(d.jzmj)),' ') as jzmj,
+		nvl(to_char(sum(d.tnjzmj)),' ') as tnmj,
+		nvl(to_char(sum(d.ftjzmj)),' ') as ftmj,
+		nvl(a.bdcdyh,' ') as bdcdyh,
+		nvl(to_char(z.zcs),' ') as zcs,
+		nvl(to_char(a.djrq,'yyyy-MM-dd'),' ') as djsj,
+		nvl(a.fj,' ') as fj
+		from dj_djb a
+		join ql_tdxg b
+		on a.slbh = b.slbh
+		join dj_tsgl c
+		on a.slbh = c.slbh
+		join fc_h_qsdc d
+		on c.tstybm = d.tstybm
+		join fc_z_qsdc z
+		on d.lsztybm = z.tstybm
+		join ql_fwxg e
+		on a.slbh = e.slbh
+		join dj_sjd g
+		on a.slbh=g.slbh
+		where (a.lifecycle = 0 or a.lifecycle is null)
+		<if test="slbh!=null and slbh !=''">
+			and a.slbh=#{slbh}
+		</if>
+		group by a.slbh,a.bdczh,b.qllx,a.djyy,b.tdsyqr,b.dytdmj,b.fttdmj,g.lcmc,b.qsrq,b.zzrq,d.lsfwbh,z.xmmc,z.fwjg,g.zl,e.ghytms,a.bdcdyh,z.zcs,a.djrq,a.fj
+	</select>
+
+	<select id="selectQlr" parameterType="com.xiaoshu.admin.model.Qlrxx" resultType="com.xiaoshu.admin.model.Qlrxx">
+		select distinct
+		nvl(a.slbh,' ') as qlrslbh,
+		nvl(a.bdczh,' ') as qlrbdcqzh,
+		nvl(c.qlrmc,' ') as qlr,
+		nvl(c.zjhm,' ') as qlrzjh,
+		nvl(c.zjlb,' ') as qlrzjzl,
+		nvl(b.gyfs,' ') as qlrgyfs,
+		nvl(c.dh,' ') as qlrlxfs,
+		nvl(c.dz,' ') as qlrdz
+		from
+		dj_djb a join dj_qlrgl b
+		on a.slbh=b.slbh
+		join dj_qlr c
+		on b.qlrid=c.qlrid
+		where (a.lifecycle = 0 or a.lifecycle is null)
+		and (b.qlrlx ='权利人' or b.qlrlx is null)
+		<if test="qlrslbh!=null and qlrslbh !=''"> 
+		AND a.slbh = #{qlrslbh}
+		</if>
+	</select>
+
+	<select id="selectYwr" parameterType="com.xiaoshu.admin.model.Ywrxx" resultType="com.xiaoshu.admin.model.Ywrxx">
+		select distinct
+		nvl(a.slbh,' ') as ywrslbh,
+		nvl(a.bdczh,' ') as ywrbdcqzh,
+		nvl(d.qlrmc,' ') as ywrqlr,
+		nvl(d.zjhm,' ') as ywrzjhm,
+		nvl(d.zjlb,' ') as ywrzjzl,
+		nvl(d.dh,' ') as ywrlxfs,
+		nvl(d.dz,' ') as ywrdz
+		from 
+		dj_djb a
+		join dj_xgdjgl b
+		on a.slbh = b.zslbh
+		join dj_qlrgl c
+		on b.fslbh = c.slbh
+		join dj_qlr d
+		on c.qlrid = d.qlrid
+		where (c.qlrlx ='权利人' or c.qlrlx is null)
+		and (a.lifecycle = 0 or a.lifecycle is null)
+		<if test="ywrslbh!=null and ywrslbh !=''"> 
+		AND a.slbh = #{ywrslbh}
+		</if>
+	</select>
+	
+	<select id="fjxx" parameterType="com.xiaoshu.admin.model.FjEntity" resultType="com.xiaoshu.admin.model.FjEntity">
+
+		select a.parentnode slbh,c.filename fileTypeName,c.ftpath filePath from
+		kfqggk.pub_attachlst a join kfqsxk.dj_sjd b on b.slbh = a.parentnode
+		join kfqwdk.doc_binfile c
+		on a.fileid = c.fileid
+		<where>
+			<if test="slbh !=null and slbh !=''">
+				a.parentnode= #{slbh}
+			</if>
+		</where>
+		union
+		select d.prjid slbh, c.filename fileTypeName, c.ftpath filePath
+		from
+		kfqggk.pub_attachlst a
+		join kfqggk.wfm_actinst d
+		on a.parentnode =
+		d.wrkid
+		join kfqsxk.dj_sjd b
+		on d.prjid = b.slbh
+		join kfqwdk.doc_binfile c
+		on a.fileid = c.fileid
+		<where>
+			<if test="slbh !=null and slbh !=''">
+				d.prjid= #{slbh}
+			</if>
+		</where> 
+  </select>
+	
+
+
+</mapper>
